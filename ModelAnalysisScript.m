@@ -18,11 +18,13 @@ while x ~= 0
         for k=1:numberOfFiles
             FBA_Solutions{k} = optimizeCbModel(BioData{k}, 'max');
         end
+        disp('Results compiled in MATLAB structure ''FBA_Solutions''.')
     elseif x == 2
         fluxSolutions = cell(numberOfFiles,1);
         for k=1:numberOfFiles
-            FBA_Solutions{k} = geometricFBA(BioData{k});
+            FVA_Solutions{k} = geometricFBA(BioData{k});
         end
+        disp('Results compiled in MATLAB structure ''FBA_Solutions''.')
     elseif x == 3
         for k=1:numberOfFiles
             [grRatio, grRateKO, grRateWT, hasEffect, delRxns,...
@@ -36,6 +38,8 @@ while x ~= 0
             SingleGeneDeletionMatrix(k).delRxns = delRxns;
             SingleGeneDeletionMatrix(k).fluxSolution = fluxSolution;
         end
+        disp('Results compiled in MATLAB');
+        disp('structure ''SingleGeneDeletionMatrix''.');
     elseif x == 4
         disp('_________________________________________________________');
         disp('WARNING: DOUBLE GENE DELETIONS ARE MEMORY/POWER INTENSIVE');
@@ -56,6 +60,8 @@ while x ~= 0
                 DoubleGeneDeletionMatrix(k).grRateKO = grRateKO;
                 DoubleGeneDeletionMatrix(k).grRateWT = grRateWT;
             end
+            disp('Results compiled in MATLAB');
+            disp('structure ''DoubleGeneDeletionMatrix''.');
         else
             disp('____________________________________________________');
             disp('Individual dual lethal gene studies can be performed');
@@ -68,11 +74,13 @@ while x ~= 0
             FVA_Matrix(k).minimumFlux = minFlux;
             FVA_Matrix(k).maximumFlux = maxFlux;
         end
+        disp('Results compiled in MATLAB structure ''FVA_Matrix''.')
     elseif x == 6
         outputMetabolites = cell(numberOfFiles,1);
         for k=1:numberOfFiles
             outputMetabolites{k} = detectDeadEnds(BioData{k});
         end
+        disp('Results compiled in MATLAB structure ''outputMetabolites''.')
     else
         disp('Script closing...');
         x = 0;
