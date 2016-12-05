@@ -1,0 +1,55 @@
+********************** PRIMARY FIELDS REQUIRED IN MODEL ******************************************
+rxns:				Reaction name abbrev.; reaction ID; order corresponds to S-matrix
+
+mets:				Metabolite name abbrev.; metabolite ID; order corresponds to S-matrix
+
+S:					Stoichiometric matrix in sparse format
+
+rev:				Logical array; true(1) for reversible reactions, otherwise false(0)
+
+lb:					Lower flux bound for corresponding reactions
+
+ub:					Upper flux bound for corresponding reactions
+
+c:					Objective coefficient for corresponding reactions
+
+metCharge:			Value of charge for corresponding metabolite
+
+metFormulas:		Elemental formula for each metabolite
+
+rules:				Boolean rule for the corresponding rxn which defines gene-reaction relationship
+
+genes:				List of all genes within the model
+
+rxnGeneMat:			Matrix with rows corresponding to reactions and columns corresponding to genes
+
+grRules:			Rules field in a format readable format
+
+subSystems:			SubSystem assignment for each reaction
+
+description:		A string describing the model (i.e. model name)
+
+************* SUPPLEMENTARY FIELDS OPTIONAL IN MODEL *********************************************
+rxnNames:			Full name of each corresponding reaction
+
+rxnReferences:		Cell array of strings which can contain optional information on references for
+					each specific reaction
+
+rxnECNumbers:		E. C. number for each reaction
+
+rxnNotes:			Cell array of strings which can contain optional information for each specific
+					reaction
+
+confidenceScores: 	Confidence score for each reaction
+
+proteins:			Proteins associated with each reaction
+
+metNames:			Full name of each corresponding metabolite
+
+metChEBIID:			ChEBI ID for each corresponding metabolite
+
+metKeggID:			KEGG ID for each corresponding metabolite
+
+metPubChemID:		PubChem ID for each corresponding metabolite
+
+metInchiString:		Inichi String for each corresponding metabolite

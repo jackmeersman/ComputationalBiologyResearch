@@ -1,0 +1,92 @@
+********************** NOTES FOR COBRA FUNCTION INPUTS AND OUTPUTS ********************************
+
+Function Inputs:
+	model:					COBRA model to be analyzed in MATLAB
+	
+	rxnNameList:			Cell array of reaction IDs corresponding to reaction IDs in
+							model.rxns
+	
+	value:					A floating point number
+	
+	boundType:				Specifies the bounds that should be changed for the reactions
+							and can take values of ‘l’, ‘u’ or ‘b’ for lower, upper,
+							or both, respectively.
+	
+	osenseStr:				String, either ‘max’ or ‘min’ to maximize or minimize the
+							value of the objective, respectively
+	
+	minNorm:				Integer value, default 0. Ff non-zero, attempt to find a
+							solution that minimizes the presence of loops
+	
+	allowLoops:				Boolean value, default true. If set to false, use the loop
+							law algorithm to remove loops—this procedure can be
+							time-consuming
+	
+	method:					String, ‘FBA’ (default), ‘MOMA’ or linear MOMA (‘lMOMA’)
+	
+	geneList:				Cell array of genes corresponding to model.genes. If not
+							provided, deletion simulations are performed for all genes in
+							the model
+	
+	optPercentage:			Integer (default 100) specifying the percentage of optimal
+							that an alternate flux distribution must realize in order
+							to be considered an acceptable alternative flux distribution
+	
+	verbFlags:				Unknown
+	
+	removeExternalMets:		Boolean value, setting to true removes external metabolites
+							from the results. Not all gaps can be identified by simply
+							inspecting the model.S matrix.
+	
+	findNCgaps:				Unknown
+	
+Function Outputs:
+	solution:				Single cell solution for a given solved function
+	
+	grRatio:				Growth rate of the knockout/growth rate of wild type (WT)
+	
+	grRateKO:				Growth rate of the knockouts
+	
+	grRateWT:				WT growth rate
+	
+	hasEffect:				Boolean list indicating whether deletion of the corresponding
+							gene alters the growth rate
+	
+	delRxns:				Contains a list of the reactions, the bounds of which are set
+							to 0 for each gene deletion
+	
+	fluxSolution:			The flux solution for each deletion
+
+	allGaps:				List of the metabolite indices for a metabolite at a gap
+	
+	rootGaps:				List of metabolites that cannot be produced
+	
+	downstreamGaps:			List of metabolites that are produced in a reaction that
+							requires a metabolite that cannot be produced
+
+1. Change Reaction Bounds
+	newModel = changeRxnBounds(model, rxnNameList, value, boundType)
+
+2. FBA Optimization
+	[solution] = optimizeCbModel(model, [osenseStr], [minNorm], [allowLoops])
+
+3. Geometric FBA Optimization
+	flux = geometricFBA(model)
+	
+4. Single Gene Deletion
+	[grRatio, grRateKO, grRateWT, hasEffect, delRxns, fluxSolution] =
+		singleGeneDeletion(model, method, [geneList])
+	
+5. Double Gene Deletion
+	[grRatioDble, grRateKO, grRateWT] =
+		doubleGeneDeletion(model, method, [geneList1], [geneList2])
+	
+6. FVA Distribution
+	[minFlux, maxFlux] = fluxVariability(model, optPercentage, [rxnNameList],
+		[verbFlag], [allowLoops])
+	
+7. Gap Filling (Method 1 - detecting metabolic dead ends)
+	outputMets = detectDeadEnds(model, [removeExternalMets])
+	
+8. Gap Filling (Method 2 - Finding gaps in the model)
+	[allGaps, rootGaps, downstreamGaps] = gapFind(model, findNCgaps, verbFlag)
