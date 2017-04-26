@@ -22,6 +22,7 @@ import xlwt
 from is_field import is_field
 from statistics import mean, median, stdev
 
+# Loading models into memory sector
 print("\nInitializing...")
 print("\nAccessing SBML (.xml) files from package directory...\n")
 
@@ -41,6 +42,7 @@ reactions = []
 genes = []
 metabolites = []
 
+# Individual model and group statistics sector
 print("\nDo you wish to produce basic model values?")
 print("If so, enter 1 to continue. Otherwise, enter 0.")
 choice = input("--> ")
@@ -71,62 +73,67 @@ if int(choice)==1:
         writer = csv.writer(f)
         writer.writerows(to_csv)
     print("Group statistics written to \'Group_Stats.csv\'.")
-"""
-print("\nDo you wish to continue with generating spreadsheets for"+
-    " the group of models?")
-print("If so, enter 1 to continue. Otherwise, enter 0.")
-choice = input("--> ")
-if int(choice)==1:
-    for m in bio_data:
-        # Note this creates an entirely new group of files. Any files in the same
-        # directory with the same name will be overwritten
-        model_workbook = xlsxwriter.Workbook(m.id+".xlsx")
-        rxnSheet = model_workbook.add_worksheet('Reactions')
-        metsSheet = model_workbook.add_worksheet('Metabolites')
-        geneSheet = model_workbook.add_worksheet('Genes')
 
-        reactions =[m.reactions.name, m.reactions.reaction, \
-            m.reactions.lower_bound, m.reactions.upper_bound, \
-            m.reactions.gene_reaction_rule, m.reactions.objective_coefficient]
-        
-        metabolites = [m.metabolites.name, m.metabolites.formula, \
-            m.metabolites.compartment, m.metabolites.charge]
+# Model spreadsheet generation
+try:
+    print("\nDo you wish to continue with generating spreadsheets for"+
+        " the group of models?")
+    print("If so, enter 1 to continue. Otherwise, enter 0.")
+    choice = input("--> ")
+    if int(choice)==1:
+        for m in bio_data:
+            # Note this creates an entirely new group of files. Any files in the same
+            # directory with the same name will be overwritten
+            model_workbook = xlsxwriter.Workbook(m.id+".xlsx")
+            rxnSheet = model_workbook.add_worksheet('Reactions')
+            metsSheet = model_workbook.add_worksheet('Metabolites')
+            geneSheet = model_workbook.add_worksheet('Genes')
 
-        genes = [m.genes.strand, m.genes.functional, \
-            m.genes.locus_start, m.genes.locus_end]
-        
-        row = 0
-        col = 0
-        for name, rxn, lwr_bnd, upr_bnd, gene_rxn_rule, objCoeff in reactions:
-            rxnSheet.write(row, col, str(name))
-            rxnSheet.write(row, col+1, str(rxn))
-            rxnSheet.write(row, col+2, str(lwr_bnd))
-            rxnSheet.write(row, col+3, str(upr_bnd))
-            rxnSheet.write(row, col+4, str(gene_rxn_rule))
-            rxnSheet.write(row, col+5, str(objCoeff))
-            row += 1
-        
-        row = 0
-        col = 0
-        for name, form, compartment, charge in metabolites:
-            metsSheet.write(row, col, str(name))
-            metsSheet.write(row, col+1, str(form.formula))
-            metsSheet.write(row, col+2, str(compartment))
-            metsSheet.write(row, col+3, str(charge))
-            row += 1
+            reactions =[m.reactions.name, m.reactions.reaction, \
+                m.reactions.lower_bound, m.reactions.upper_bound, \
+                m.reactions.gene_reaction_rule, m.reactions.objective_coefficient]
 
-        row = 0
-        col = 0
-        for strand, functional, start, end in genes:
-            geneSheet.write(row, col, str(strand))
-            geneSheet.write(row, col+1, str(functional))
-            geneSheet.write(row, col+2, str(compartment))
-            geneSheet.write(row, col+3, str(charge))
-            row += 1
+            metabolites = [m.metabolites.name, m.metabolites.formula, \
+                m.metabolites.compartment, m.metabolites.charge]
 
-        model_workbook.close()
-    print("Model spreadsheets assembled")
-"""
+            genes = [m.genes.strand, m.genes.functional, \
+                m.genes.locus_start, m.genes.locus_end]
+
+            row = 0
+            col = 0
+            for name, rxn, lwr_bnd, upr_bnd, gene_rxn_rule, objCoeff in reactions:
+                rxnSheet.write(row, col, str(name))
+                rxnSheet.write(row, col+1, str(rxn))
+                rxnSheet.write(row, col+2, str(lwr_bnd))
+                rxnSheet.write(row, col+3, str(upr_bnd))
+                rxnSheet.write(row, col+4, str(gene_rxn_rule))
+                rxnSheet.write(row, col+5, str(objCoeff))
+                row += 1
+
+            row = 0
+            col = 0
+            for name, form, compartment, charge in metabolites:
+                metsSheet.write(row, col, str(name))
+                metsSheet.write(row, col+1, str(form.formula))
+                metsSheet.write(row, col+2, str(compartment))
+                metsSheet.write(row, col+3, str(charge))
+                row += 1
+
+            row = 0
+            col = 0
+            for strand, functional, start, end in genes:
+                geneSheet.write(row, col, str(strand))
+                geneSheet.write(row, col+1, str(functional))
+                geneSheet.write(row, col+2, str(compartment))
+                geneSheet.write(row, col+3, str(charge))
+                row += 1
+
+            model_workbook.close()
+        print("Model spreadsheets assembled")
+except:
+    print("Unexpected error:", sys.exc_info()[0])
+
+# Model studies sector
 print("\nDo you wish to run tests (FBA, FVA, gene deletion, etc.) on"+
     " the group of models?")
 print("If so, enter 1 to continue. Otherwise, enter 0.")
