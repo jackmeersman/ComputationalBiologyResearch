@@ -1,5 +1,4 @@
 ********************** NOTES FOR COBRA FUNCTION INPUTS AND OUTPUTS ********************************
-
 Function Inputs:
 	model:					COBRA model to be analyzed in MATLAB
 	
