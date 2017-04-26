@@ -5,5 +5,5 @@ This research was designed to provide future computational biology and environme
 Meersman, J.T.. 2016. Computational assembly of in silico cyanobacteria models and related data mining scripts.
 Fall 2016 Research Paper Link: https://drive.google.com/file/d/0Bypy5a-VBlzNVnNJT1dyZjM5SDA/view?usp=sharing
 
-Meersman, J.T.. 2017. Data mining in silico cyanobacterial models in Python and Unix command line.
+Meersman, J.T.. 2017. Data mining and optimization of in silico models via Python and the Unix command line.
 Spring 2017 Research Paper Link: https://drive.google.com/open?id=0Bypy5a-VBlzNRjhiTnE0NXU1eDQ
