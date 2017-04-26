@@ -19,7 +19,6 @@ import pandas
 import time
 import xlsxwriter
 import xlwt
-from is_field import is_field
 from statistics import mean, median, stdev
 
 # Loading models into memory sector
